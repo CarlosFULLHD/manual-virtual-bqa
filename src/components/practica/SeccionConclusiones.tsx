@@ -1,104 +1,102 @@
 "use client";
 
 import { usePractica } from "@/context/ProgresoContext";
+import { PreguntaAbierta } from "@/components/caso/PreguntaAbierta";
+import { Icono } from "@/components/ui/Icono";
+import { TablaInfoVista } from "@/components/ui/TablaInfoVista";
 import { Vacio } from "@/components/ui/Vacio";
-import { ejecutarCalculo, formatear } from "@/lib/calculos";
 import type { Practica } from "@/lib/types";
 
+/** Cierre de una práctica de laboratorio: resultados esperados, preguntas de análisis y conclusión */
 export function SeccionConclusiones({ p }: { p: Practica }) {
   const { progreso, actualizar } = usePractica(p.id);
-  if (!p.calculo || !p.referencia) return <Vacio />;
+  const bloques = p.analisis ?? [];
+  if (!bloques.length && !p.esperados) return <Vacio />;
 
-  const { calc, resultado: r, esEjemplo } = ejecutarCalculo(p.calculo, progreso.datos);
-  const ref = p.referencia;
-  const pos = (x: number) => Math.min(100, Math.max(0, ((x - ref.escalaMin) / (ref.escalaMax - ref.escalaMin)) * 100));
-  const estado = r.promedio < ref.min ? "bajo" : r.promedio > ref.max ? "alto" : "ok";
-  const etiqueta = { ok: "Dentro del rango", alto: "Por encima del rango", bajo: "Por debajo del rango" }[estado];
-
-  const insertarDatos = () => actualizar((pr) => ({ ...pr, conclusion: calc.frase(r) + pr.conclusion }));
+  const preguntas = bloques.flatMap((b) => b.preguntas);
+  const hechas = preguntas.filter((q) => (progreso.respuestas[q.id] ?? "").trim().length > 20).length;
 
   return (
-    <div className="stack">
-      <section className="panel">
-        <div className="row entre">
-          <h3>Resultado frente al valor de referencia</h3>
-          <span className={`pill ${estado === "ok" ? "ok" : "warn"}`}>{etiqueta}</span>
-        </div>
-        <div className="rango" role="img" aria-label={`Resultado ${formatear(r.promedio, 3)}; rango ${ref.min} a ${ref.max}`}>
-          <div className="pista" />
-          <div className="zona-ok" style={{ left: `${pos(ref.min)}%`, width: `${pos(ref.max) - pos(ref.min)}%` }} />
-          <div className="marca" style={{ left: `calc(${pos(r.promedio)}% - 1.5px)` }} />
-          <span className="lbl" style={{ left: `${pos(ref.min)}%` }}>
-            {formatear(ref.min, 2)}
-          </span>
-          <span className="lbl" style={{ left: `${pos(ref.max)}%` }}>
-            {formatear(ref.max, 2)}
-          </span>
-        </div>
-        <p style={{ marginTop: 14 }}>
-          Tu resultado:{" "}
-          <b className="mono">
-            {formatear(r.promedio, 3)} {ref.unidad}
-          </b>
-          {esEjemplo && <span className="muted"> (ejemplo)</span>}. Rango de referencia: {formatear(ref.min, 2)} a {formatear(ref.max, 2)}.
-        </p>
-        <p className="muted pequeno" style={{ marginTop: 4 }}>
-          {ref.nota}
-        </p>
-        {estado !== "ok" && p.causas && (
-          <div className="callout neutro" style={{ marginTop: 10 }}>
-            <b>Causas probables</b>
-            <ul className="lista">
-              {p.causas[estado].map((c) => (
-                <li key={c}>{c}</li>
-              ))}
-            </ul>
+    <div className="stack grande">
+      {p.esperados && (
+        <section className="panel">
+          <div className="cab-seccion">
+            <h2>{p.esperados.titulo}</h2>
+            <span className="muted pequeno">Compara con lo que obtuviste</span>
           </div>
-        )}
-      </section>
+          <TablaInfoVista tabla={p.esperados} sinTitulo />
+        </section>
+      )}
+
+      {bloques.length > 0 && (
+        <div className="callout">
+          <b>Preguntas de análisis e interpretación.</b> Respóndelas con tus resultados a la vista.{" "}
+          <span className="mono">
+            {hechas}/{preguntas.length}
+          </span>{" "}
+          respondidas.
+        </div>
+      )}
+
+      {bloques.map((bloque) => (
+        <section key={bloque.titulo} className="stack">
+          <h2>{bloque.titulo}</h2>
+          {bloque.preguntas.map((q) => (
+            <PreguntaAbierta key={q.id} q={q} valor={progreso.respuestas[q.id] ?? ""} onChange={(v) => actualizar((pr) => ({ ...pr, respuestas: { ...pr.respuestas, [q.id]: v } }))} />
+          ))}
+        </section>
+      ))}
 
       <section className="panel">
-        <h3>Preguntas para guiar tu conclusión</h3>
-        <ol className="lista" style={{ marginTop: 8 }}>
-          {p.preguntas.map((q) => (
-            <li key={q}>{q}</li>
+        <div className="cab-seccion">
+          <h2>Tu conclusión</h2>
+          <span className="muted pequeno">Responde a los objetivos de la práctica</span>
+        </div>
+        <ul className="objetivos" style={{ marginBottom: 12 }}>
+          {p.objetivos.map((o, i) => (
+            <li key={o} className="muted pequeno">
+              <span className="objetivo-num">{i + 1}</span>
+              {o}
+            </li>
           ))}
-        </ol>
-        <label htmlFor="conclusion" className="negrita" style={{ display: "block", margin: "14px 0 6px" }}>
-          Tu conclusión
-        </label>
+        </ul>
         <textarea
           id="conclusion"
-          placeholder="Escribe aquí con tus propias palabras…"
+          aria-label="Tu conclusión"
+          placeholder="¿Qué encontraste? ¿Se cumplió lo esperado? ¿Qué explica las diferencias?"
           value={progreso.conclusion}
           onChange={(e) => {
             const v = e.target.value;
             actualizar((pr) => ({ ...pr, conclusion: v }));
           }}
         />
-        <div className="row" style={{ marginTop: 8 }}>
-          <button className="btn small" onClick={insertarDatos}>
-            Insertar datos del resultado
-          </button>
-          <span className="muted pequeno">Agrega una frase con tus números; el análisis lo escribes tú.</span>
-        </div>
       </section>
 
-      <section className="panel">
-        <h3>Bibliografía</h3>
-        <ul className="lista" style={{ marginTop: 8 }}>
-          {p.bibliografia.map((b) => (
-            <li key={b.texto}>
-              {b.texto}{" "}
-              {b.url && (
-                <a href={b.url} target="_blank" rel="noopener noreferrer">
-                  Abrir ↗
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {p.bibliografia.length > 0 && (
+        <details className="desplegable">
+          <summary>
+            <Icono nombre="libro" tam={18} />
+            <span>
+              <b>Bibliografía</b>
+              <span className="muted pequeno">{p.bibliografia.length} fuentes de la guía</span>
+            </span>
+          </summary>
+          <div className="desplegable-cuerpo">
+            <ul className="lista">
+              {p.bibliografia.map((b) => (
+                <li key={b.texto}>
+                  {b.texto}{" "}
+                  {b.url && (
+                    <a href={b.url} target="_blank" rel="noopener noreferrer">
+                      Abrir ↗
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      )}
     </div>
   );
 }

@@ -5,8 +5,10 @@ import { GLOSARIO } from "@/data/glosario";
 import { Modal } from "./Modal";
 
 const LETRAS = "a-zA-ZáéíóúüñÁÉÍÓÚÜÑ";
+const escapar = (t: string) => t.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
 const TERMINOS = Object.keys(GLOSARIO).sort((a, b) => b.length - a.length);
-const REGEX = new RegExp(`(?<![${LETRAS}])(${TERMINOS.join("|")})(?![${LETRAS}])`, "gi");
+const CLAVES = new Map(TERMINOS.map((t) => [t.toLowerCase(), t]));
+const REGEX = new RegExp(`(?<![${LETRAS}])(${TERMINOS.map(escapar).join("|")})(?![${LETRAS}])`, "gi");
 
 /**
  * Muestra un texto y convierte los términos del glosario en botones
@@ -23,7 +25,7 @@ export function TextoGlosario({ texto }: { texto: string }) {
       const clave = m[0].toLowerCase();
       if (vistos.has(clave) || m.index === undefined) continue;
       vistos.add(clave);
-      out.push(texto.slice(ultimo, m.index), { termino: clave, original: m[0] });
+      out.push(texto.slice(ultimo, m.index), { termino: CLAVES.get(clave) ?? clave, original: m[0] });
       ultimo = m.index + m[0].length;
     }
     out.push(texto.slice(ultimo));

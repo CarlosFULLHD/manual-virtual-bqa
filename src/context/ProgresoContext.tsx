@@ -15,9 +15,33 @@ export interface ProgresoPractica {
   datos: Record<string, string>;
   checks: Record<string, boolean>;
   conclusion: string;
+  /** Secciones ya abiertas (slugs) */
+  visitadas: string[];
+  /** Respuestas del cuestionario: índice de pregunta → opción elegida */
+  quiz: Record<string, number>;
+  /** Reactivos cuya ficha ya se revisó */
+  reactivosVistos: string[];
+  /** Temas teóricos: lecciones ya vistas y ejercicios resueltos (id → bien / mal) */
+  lecciones: string[];
+  ejercicios: Record<string, "ok" | "mal">;
+  /** Casos clínicos: opciones elegidas (clave → id) y respuestas escritas (id de pregunta → texto) */
+  elecciones: Record<string, string>;
+  respuestas: Record<string, string>;
 }
 
-const VACIO: ProgresoPractica = { pasosHechos: [], datos: {}, checks: {}, conclusion: "" };
+const VACIO: ProgresoPractica = {
+  pasosHechos: [],
+  datos: {},
+  checks: {},
+  conclusion: "",
+  visitadas: [],
+  quiz: {},
+  reactivosVistos: [],
+  lecciones: [],
+  ejercicios: {},
+  elecciones: {},
+  respuestas: {},
+};
 const KEY = "bqa-progreso-v1";
 const KEY_ROL = "bqa-rol";
 

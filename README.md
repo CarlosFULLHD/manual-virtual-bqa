@@ -3,18 +3,33 @@
 Manual virtual e interactivo de prácticas de laboratorio de Bioquímica Aplicada (UMSA).
 Proyecto piloto hecho con **Next.js 16 (App Router) + React 19 + TypeScript**.
 
-Cada práctica se recorre en 6 secciones:
+Pensado principalmente para el **estudiante**: poco texto, pantallas visuales e interactivas.
+**Todo el contenido proviene de las guías de la cátedra** (los PDF de cada práctica).
 
-| # | Sección | Qué muestra |
-|---|---------|-------------|
-| 1 | **Inicio** | Explicación sencilla, objetivos, seguridad y fundamento teórico |
-| 2 | **Materiales** | Lista de materiales para marcar y reactivos con ficha de riesgos (pictogramas SGA) |
-| 3 | **Esquema** | Diagrama de flujo generado desde los pasos, dibujo del montaje y reacción química |
-| 4 | **Procedimiento** | Tarjetas paso a paso: qué hacer, por qué, qué se debe ver, error frecuente, simulador, temporizador y registro de datos |
-| 5 | **Cálculos** | Resultado automático con la fórmula, desarrollo, promedio, desviación estándar, CV y tabla para copiar al informe |
-| 6 | **Conclusiones** | Comparación con el valor de referencia, causas probables, preguntas guía, conclusión y bibliografía |
+### Contenido cargado
 
-Los términos técnicos (bureta, enrasar, punto final…) se marcan solos y abren su definición del glosario.
+| N.º | Tipo | Título | Fuente |
+|-----|------|--------|--------|
+| L2 | Tema teórico | Preparación de soluciones, diluciones y buffers | Laboratorio 2 + Ejercicios 2 + Práctica (149 ejercicios con corrección) |
+| 5 | Caso clínico | Tamizaje neonatal: defectos de la β-oxidación | Práctica 5 |
+| 6 | Laboratorio | L-carnitina en alimentos | Práctica 6 |
+| 7 | Laboratorio | Digestión y emulsificación de lípidos | Práctica 7 |
+| 11 | Laboratorio | Adaptaciones metabólicas al ejercicio y ayuno | Práctica 11 |
+| 13 | Laboratorio | Metabolitos secundarios vegetales | Práctica 13 |
+
+### Tres tipos de práctica
+
+Cada práctica declara su `tipo` y con eso cambian sus pantallas (ver `SECCIONES_POR_TIPO` en `src/lib/types.ts`):
+
+- **`laboratorio`** — Inicio · Prepárate (seguridad + quiz) · Materiales · Esquema · Procedimiento · Resultados · Conclusiones · Resumen.
+- **`teoria`** — Inicio · Conceptos (lecciones con fórmula, ejemplo guiado y mini calculadora) · Ejercicios (se corrigen solos y muestran la solución paso a paso) · Autoevaluación · Resumen. *Sin laboratorio ni conclusiones.*
+- **`caso`** — Inicio · Fundamento (con mapa interactivo de la vía) · Casos (perfiles para identificar diagnóstico, enzima, gen y marcador) · Análisis (preguntas con ideas clave y búsqueda en PubMed) · Taller (caso complejo, ordenar estudios) · Artículos · Resumen. *Sin laboratorio.*
+
+Además: **Herramientas** (diluciones, preparar soluciones, unidades, estadística) y **Glosario** con buscador. Los términos técnicos se marcan solos en los textos.
+
+### Qué se agregó a lo que dicen las guías
+
+Para que la app sea interactiva se escribieron, a partir del contenido de cada guía: las preguntas de los quiz, el "por qué" y "qué debes ver" de cada paso, las ideas clave de la Práctica 5, los tiempos por paso y los datos de peligro de los reactivos (pictogramas SGA). **Conviene que el docente los revise.** Los detalles están comentados al inicio de cada archivo de `src/data/practicas/`.
 
 ---
 
@@ -53,74 +68,47 @@ npm run typecheck  # revisa tipos de TypeScript
 
 ```
 src/
-├── app/                              # Rutas (App Router)
-│   ├── layout.tsx                    # Layout general: fuentes, barra superior, estado
-│   ├── page.tsx                      # Pantalla inicial: lista de prácticas
-│   ├── globals.css                   # Estilos y colores (claro / oscuro)
-│   ├── not-found.tsx
-│   ├── docente/page.tsx              # Panel docente: generador de prácticas
+├── app/                               # Rutas (App Router)
+│   ├── page.tsx                       # Inicio: lo que sigue + todas las prácticas
+│   ├── herramientas/ · glosario/ · docente/
 │   └── practicas/[id]/
-│       ├── layout.tsx                # Cabecera + pestañas de la práctica
-│       ├── page.tsx                  # Redirige a /inicio
-│       ├── inicio/page.tsx
-│       ├── materiales/page.tsx
-│       ├── esquema/page.tsx
-│       ├── procedimiento/page.tsx
-│       ├── calculos/page.tsx
-│       └── conclusiones/page.tsx
+│       ├── layout.tsx                 # Cabecera + pestañas según el tipo
+│       ├── inicio/ · resumen/         # Comunes a todos los tipos
+│       ├── preparate/ · materiales/ · esquema/ · procedimiento/ · calculos/ · conclusiones/   # Laboratorio
+│       └── [seccion]/page.tsx         # Teoría (conceptos, ejercicios, autoevaluacion) y caso (fundamento, casos, analisis, taller, fuentes)
 ├── components/
-│   ├── layout/                       # Barra superior, pestañas, estado de la práctica
-│   ├── practica/                     # Una componente por sección + simulador + temporizador
-│   ├── esquemas/                     # Diagrama de flujo y dibujos de montaje (SVG)
-│   ├── docente/                      # Editor de prácticas
-│   └── ui/                           # Modal, glosario, pictogramas SGA, copiar, vacío
-├── context/ProgresoContext.tsx       # Rol y avance del estudiante (localStorage)
+│   ├── practica/                      # Pantallas de laboratorio
+│   ├── resultados/                    # Una calculadora de resultados por práctica (lipólisis, carnitina, metabolismo, fitoquímico)
+│   ├── teoria/                        # Lecciones, mini calculadoras y ejercicios
+│   ├── caso/                          # Perfil de acilcarnitinas, mapa de la vía, preguntas, taller
+│   ├── esquemas/ · herramientas/ · glosario/ · inicio/ · layout/ · ui/
 ├── data/
-│   ├── practicas/                    # ← Contenido: un archivo por práctica
-│   │   ├── index.ts                  # Registro de prácticas
-│   │   ├── acidez-leche.ts           # Práctica completa de ejemplo
-│   │   ├── glucosa.ts                # Borrador
-│   │   └── proteinas.ts              # Borrador
-│   ├── glosario.ts
-│   └── ghs.ts
+│   ├── practicas/                     # ← Un archivo por práctica + index.ts
+│   ├── ejercicios/soluciones.ts       # Banco de ejercicios (enunciado + resolutor)
+│   └── glosario.ts
+├── context/ProgresoContext.tsx        # Avance del estudiante (localStorage)
 └── lib/
-    ├── types.ts                      # Modelo de datos de una práctica
-    ├── calculos.ts                   # Calculadoras y estadística
-    └── fechas.ts
+    ├── types.ts                       # Modelo de datos y tipos de práctica
+    ├── soluciones.ts                  # Resolutores: calculan la respuesta y el paso a paso
+    ├── calculos.ts · progreso.ts · fechas.ts
 ```
 
-Rutas resultantes:
+## Cómo agregar contenido
 
-- `/` lista de prácticas
-- `/practicas/acidez-leche/inicio` … `/conclusiones`
-- `/docente` panel docente
-
-## Cómo agregar una práctica
-
-**Opción rápida:** entrar como *Docente* → **Panel docente**, llenar el formulario y copiar el código generado.
-
-**Paso a paso:**
-
-1. Crear `src/data/practicas/mi-practica.ts` siguiendo el tipo `Practica` de `src/lib/types.ts`
-   (se puede copiar `acidez-leche.ts` como plantilla).
-2. Importarla y agregarla al arreglo en `src/data/practicas/index.ts`.
-3. Si la práctica necesita un **cálculo nuevo**, agregarlo en `CALCULADORAS` de `src/lib/calculos.ts`
-   y su nombre en `TipoCalculo` (`types.ts`). Ya existen funciones para regresión lineal (curvas de calibración),
-   diluciones, masa de soluto y % de error.
-4. Si necesita un **dibujo de montaje nuevo**, crear el SVG en `src/components/esquemas/` y registrarlo en `esquemas/index.tsx`.
-
-Las secciones sin datos se muestran como “en preparación”, así que se puede publicar una práctica a medias.
+- **Práctica de laboratorio:** copiar `src/data/practicas/digestion-lipidos.ts`, cambiar el contenido y registrarla en `index.ts`. Si necesita cálculos propios, crear su componente en `src/components/resultados/` y agregarlo en `SeccionCalculos.tsx`.
+- **Tema teórico:** copiar `soluciones.ts` (lecciones + quiz). Los ejercicios van en `src/data/ejercicios/`: cada uno es un enunciado más un resolutor de `src/lib/soluciones.ts`, así la respuesta siempre se calcula.
+- **Caso clínico:** copiar `tamizaje-beta-oxidacion.ts` (bloques de teoría, casos con sus analitos, preguntas y taller).
 
 ## Limitaciones del piloto
 
 - El avance, los datos y la conclusión de cada estudiante se guardan **solo en su navegador** (localStorage).
 - No hay inicio de sesión. El botón Estudiante/Docente solo cambia la vista.
-- El contenido de la práctica de ejemplo (cantidades, concentraciones, rango de referencia) debe
-  **revisarse con el manual de la cátedra**.
+- Las fechas de cada práctica son provisionales: se cambian en el campo `fecha` de cada archivo.
+- En la guía de L-carnitina el archivo dice "Práctica 6" y el encabezado interno "Práctica 10": confirmar el número.
 
 ## Siguientes pasos sugeridos
 
-1. Cargar las prácticas reales del manual.
+1. Cargar las prácticas que faltan del manual.
 2. Base de datos + inicio de sesión (por ejemplo Supabase o Vercel Postgres) para que el docente vea el avance.
 3. Cuestionario previo al laboratorio con corrección automática.
 4. Calculadora de curva de calibración con gráfico para las prácticas de espectrofotometría.

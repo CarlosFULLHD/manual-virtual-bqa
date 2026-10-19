@@ -1,0 +1,221 @@
+import type { Practica } from "@/lib/types";
+
+/**
+ * Práctica 7 — Digestión y emulsificación de lípidos: lipólisis y acción de sales biliares.
+ * Contenido tomado de la guía de la cátedra (objetivos, fundamento, materiales, procedimiento,
+ * tablas de registro, preguntas de análisis, debate y bibliografía).
+ */
+export const digestionLipidos: Practica = {
+  id: "digestion-lipidos",
+  tipo: "laboratorio",
+  numero: 7,
+  titulo: "Digestión y emulsificación de lípidos: lipólisis y acción de sales biliares",
+  unidad: "Laboratorio · Metabolismo de lípidos",
+  duracion: "3 h",
+  grupo: "5 grupos, una grasa por grupo",
+  riesgo: "Bajo",
+  estado: "asignada",
+  fecha: "2026-10-30",
+  resumen: "Simula la digestión de grasas: emulsiona con sales biliares y mide la acción de la lipasa pancreática titulando con NaOH.",
+  queEs:
+    "Esta práctica integra la emulsificación (acción de sales biliares) y la hidrólisis enzimática (lipólisis por lipasa pancreática) en una secuencia que simula la digestión lipídica en el intestino delgado. Cada grupo trabaja con un tipo de grasa diferente, lo que permite comparar cómo la composición en ácidos grasos influye en la eficiencia digestiva.",
+  claves: {
+    mide: "Los ácidos grasos libres que libera la lipasa",
+    con: "Titulación con NaOH 0,01 N y fenolftaleína",
+    senal: "Rosado que persiste más de 30 segundos",
+  },
+  historia: [
+    { icono: "matraz", titulo: "La grasa no se mezcla con el agua", texto: "En el intestino, la grasa forma gotas grandes que la enzima casi no puede atacar." },
+    { icono: "gota", titulo: "Las sales biliares emulsionan", texto: "Reducen la tensión entre el agua y la grasa y forman micelas de 3–10 nm: mucha más superficie." },
+    { icono: "bloqueo", titulo: "La lipasa corta", texto: "Rompe los enlaces sn-1 y sn-3 del triacilglicerol: libera 2 ácidos grasos y un 2-monoacilglicerol." },
+    { icono: "rosado", titulo: "Titulamos los ácidos", texto: "Los ácidos grasos libres se neutralizan con NaOH. Más NaOH gastado = más lipólisis." },
+    { icono: "huella", titulo: "Comparamos grasas", texto: "Cada grupo usa una grasa distinta y se compara la velocidad de digestión." },
+  ],
+  objetivos: [
+    "Demostrar el papel de las sales biliares en la emulsificación de distintos tipos de lípidos y evaluar cómo la composición en ácidos grasos afecta la estabilidad de la emulsión.",
+    "Evaluar la actividad de la lipasa pancreática sobre diferentes sustratos lipídicos mediante cuantificación de ácidos grasos libres por titulación con NaOH.",
+    "Comparar la velocidad de hidrólisis enzimática entre grupos y relacionarla con el grado de insaturación, la longitud de cadena y el estado físico de cada grasa.",
+    "Integrar los resultados con la fisiología digestiva y la relevancia clínica de cada tipo de grasa en patologías del metabolismo lipídico.",
+  ],
+  fundamento:
+    "La digestión de los lípidos dietarios es un proceso bifásico coordinado entre el hígado, el páncreas y el intestino delgado. Inicia con la lipasa lingual y gástrica (~10–30 % de la hidrólisis), pero el paso principal ocurre en el duodeno, donde convergen la bilis y el jugo pancreático. Las sales biliares reducen la tensión interfacial entre la fase acuosa intestinal y las gotas lipídicas, formando micelas mixtas de 3–10 nm que amplifican el área superficial disponible para la acción enzimática (Hofmann & Hagey, 2014). La lipasa pancreática (EC 3.1.1.3) requiere su cofactor colipasa para actuar en la interfase agua-lípido. Escinde preferentemente los enlaces éster en posiciones sn-1 y sn-3 del triacilglicerol, liberando dos ácidos grasos libres (AGL) y un 2-monoacilglicerol (Lowe, 2002). La composición en ácidos grasos determina el estado físico de la grasa, la afinidad de la lipasa por el sustrato y la ruta de absorción: los ácidos grasos de cadena media (C8–C12) se absorben directamente en la vena porta sin formar quilomicrones, mientras que los de cadena larga requieren el sistema linfático. Los insaturados se emulsionan más fácilmente que los saturados (Mu & Høy, 2004). Los AGL liberados son ácidos débiles (pKa ~4,5–5,0) que pueden titularse con NaOH en presencia de fenolftaleína; el etanol al 95 % detiene la reacción y homogeniza la mezcla antes de titular.",
+  seguridad: [
+    "Usar guardapolvo, guantes y gafas durante toda la práctica.",
+    "La lipasa es termolábil: disolverla en buffer frío (4 °C), no calentarla y mantenerla en hielo.",
+    "El etanol al 95 % es inflamable: mantenerlo lejos de llamas y planchas calientes.",
+    "Usar la solución de lipasa dentro de los 30 minutos de preparada.",
+  ],
+  quiz: [
+    {
+      pregunta: "¿Qué hacen las sales biliares con la grasa?",
+      opciones: ["La hidrolizan en ácidos grasos", "Reducen la tensión interfacial y forman micelas", "La transportan por la sangre", "Neutralizan los ácidos grasos"],
+      correcta: 1,
+      explicacion: "Las sales biliares emulsionan: forman micelas mixtas de 3–10 nm que aumentan la superficie donde actúa la lipasa. No rompen enlaces.",
+    },
+    {
+      pregunta: "¿Qué productos libera la lipasa pancreática de un triacilglicerol?",
+      opciones: ["3 ácidos grasos y glicerol", "2 ácidos grasos libres y un 2-monoacilglicerol", "Un ácido graso y un diacilglicerol", "Quilomicrones"],
+      correcta: 1,
+      explicacion: "Corta preferentemente en las posiciones sn-1 y sn-3 y deja el ácido graso de la posición sn-2.",
+    },
+    {
+      pregunta: "¿Para qué se agrega etanol al 95 % a cada alícuota?",
+      opciones: ["Para detener la reacción y homogenizar antes de titular", "Para activar la lipasa", "Para dar color", "Para emulsionar la grasa"],
+      correcta: 0,
+      explicacion: "El etanol detiene la acción de la enzima: así cada alícuota refleja lo que había exactamente a ese tiempo.",
+    },
+    {
+      pregunta: "¿Qué diferencia al matraz CONTROL del EXPERIMENTAL?",
+      opciones: ["El control no lleva grasa", "El control no lleva sales biliares", "El control lleva buffer en lugar de lipasa", "El control no se incuba"],
+      correcta: 2,
+      explicacion: "Al control se le pone 1 mL de buffer para igualar el volumen. Así se ve cuánto ácido hay sin acción de la enzima.",
+    },
+    {
+      pregunta: "¿Cuál es la ruta de absorción de los ácidos grasos de cadena media (C8–C12)?",
+      opciones: ["Vía linfática en quilomicrones", "Directamente a la vena porta", "No se absorben", "Solo por difusión al colon"],
+      correcta: 1,
+      explicacion: "Los de cadena media van directo a la vena porta sin formar quilomicrones; los de cadena larga necesitan el sistema linfático.",
+    },
+  ],
+  etapas: [
+    { id: "A", nombre: "Preparación de soluciones y muestras", minutos: 20 },
+    { id: "B", nombre: "Emulsificación con sales biliares", minutos: 30 },
+    { id: "C", nombre: "Lipólisis y titulación", minutos: 90 },
+    { id: "D", nombre: "Cálculos y tabla de resultados", minutos: 15 },
+    { id: "E", nombre: "Tabla comparativa y debate", minutos: 25 },
+  ],
+  tablas: [
+    {
+      titulo: "¿Qué grasa le toca a tu grupo?",
+      columnas: ["Grupo", "Muestra asignada", "Ácido graso predominante"],
+      filas: [
+        ["1", "Aceite vegetal (girasol o maíz)", "Linoleico C18:2 (AGPI ω-6)"],
+        ["2", "Mantequilla", "Palmítico C16:0 + butírico C4:0 (mixto)"],
+        ["3", "Aceite de coco", "Láurico C12:0 (AGCM saturado)"],
+        ["4", "Grasa animal (sebo vacuno o manteca de cerdo)", "Palmítico C16:0 + esteárico C18:0 (AGS de cadena larga)"],
+        ["5", "Aceite de oliva extra virgen", "Oleico C18:1 ω-9 (AGMI)"],
+      ],
+    },
+  ],
+  materiales: [
+    { icono: "bano", nombre: "Baño María con temperatura controlable (37 °C)", cantidad: "1 compartido" },
+    { icono: "agitador", nombre: "Agitador magnético con barra magnética", cantidad: "1" },
+    { icono: "bureta", nombre: "Bureta de 25 mL (precisión ±0,05 mL)", cantidad: "1" },
+    { icono: "erlenmeyer", nombre: "Matraces Erlenmeyer de 100 mL", cantidad: "4" },
+    { icono: "pipeta", nombre: "Pipetas graduadas de 1, 2 y 5 mL", cantidad: "1 de cada una" },
+    { icono: "pipeta", nombre: "Micropipeta 100–1000 µL", cantidad: "1" },
+    { icono: "cronometro", nombre: "Cronómetro", cantidad: "1" },
+    { icono: "tubo", nombre: "Tubos de ensayo de 10 mL", cantidad: "6" },
+    { icono: "gradilla", nombre: "Gradilla para tubos", cantidad: "1" },
+    { icono: "vaso", nombre: "Vasos de precipitados de 50 mL", cantidad: "2" },
+    { icono: "termometro", nombre: "Termómetro", cantidad: "1 compartido" },
+  ],
+  reactivos: [
+    { id: "lipasa", nombre: "Lipasa pancreática (polvo)", concentracion: "100–500 U/mL al preparar · 0,5 g por grupo", funcion: "Es la enzima que hidroliza la grasa y libera los ácidos grasos. Se disuelve en 10 mL de buffer frío justo antes de usar.", peligros: "El polvo puede irritar las vías respiratorias y sensibilizar: evitar aspirarlo.", ghs: ["GHS08"], proteccion: "Guantes; pesar sin levantar polvo.", desecho: "Según indicación del laboratorio." },
+    { id: "taurocolato", nombre: "Sales biliares (taurocolato sódico)", concentracion: "2 % p/v en agua destilada · 5 mL", funcion: "Emulsiona la grasa: forma micelas y aumenta la superficie donde actúa la lipasa.", peligros: "Irritante leve de piel y ojos.", ghs: ["GHS07"], proteccion: "Guantes y gafas.", desecho: "Residuos acuosos." },
+    { id: "buffer", nombre: "Buffer fosfato", concentracion: "pH 7,4 · 50 mM · 50 mL", funcion: "Mantiene el pH del intestino delgado, en el que la lipasa trabaja bien.", peligros: "Sin peligros relevantes.", ghs: [], proteccion: "Guantes.", desecho: "Desagüe con agua." },
+    { id: "fenolftaleina", nombre: "Fenolftaleína", concentracion: "1 % en etanol · 10 gotas", funcion: "Indicador: vira a rosado cuando todos los ácidos grasos libres fueron neutralizados.", peligros: "Sospechosa de causar cáncer. Está disuelta en etanol, que es inflamable.", ghs: ["GHS02", "GHS08"], proteccion: "Guantes; lejos de llamas.", desecho: "Residuos orgánicos." },
+    { id: "naoh", nombre: "NaOH", concentracion: "0,01 N estandarizado · 50 mL", funcion: "Titulante: el volumen gastado es proporcional a los moles de ácidos grasos libres.", peligros: "A esta concentración es irritante leve.", ghs: ["GHS07"], proteccion: "Guantes y gafas.", desecho: "Residuos acuosos." },
+    { id: "etanol", nombre: "Etanol", concentracion: "95 % v/v · 30 mL", funcion: "Detiene la reacción enzimática y homogeniza la alícuota antes de titular.", peligros: "Líquido y vapores muy inflamables.", ghs: ["GHS02"], proteccion: "Lejos de llamas y fuentes de calor.", desecho: "Residuos orgánicos." },
+    { id: "agua", nombre: "Agua destilada", concentracion: "100 mL", funcion: "Tubo sin sales biliares y enjuague de material.", peligros: "Ninguno.", ghs: [], proteccion: "—", desecho: "—" },
+  ],
+  esquema: {
+    montaje: "titulacion",
+    puntos: [
+      { x: 132, y: 60, titulo: "Bureta", texto: "Contiene el NaOH 0,01 N estandarizado. Se lee a la centésima de mL." },
+      { x: 132, y: 193, titulo: "Llave", texto: "Controla el goteo. Cerca del viraje se agrega gota a gota." },
+      { x: 132, y: 262, titulo: "Alícuota", texto: "1 mL de la mezcla de reacción + 3 mL de etanol 95 % + 2 gotas de fenolftaleína." },
+      { x: 63, y: 170, titulo: "Soporte", texto: "Mantiene la bureta vertical para leer bien el menisco." },
+    ],
+    especies: {
+      reactivos: [
+        { nombre: "Ácido graso libre (R-COOH)", detalle: "liberado por la lipasa" },
+        { nombre: "NaOH", detalle: "desde la bureta" },
+      ],
+      productos: [{ nombre: "R-COO⁻Na⁺ + H₂O", detalle: "jabón sódico, neutro" }],
+    },
+    reaccion: "R-COOH + NaOH → R-COO⁻Na⁺ + H₂O        AGL (µmol/mL) = (V NaOH × N NaOH × 1000) / V alícuota",
+    reaccionExplicacion: "V NaOH = volumen gastado (mL); N NaOH = normalidad exacta del NaOH; V alícuota = 1 mL.",
+  },
+  pasos: [
+    { etapa: "A", titulo: "Preparar la lipasa", icono: "mezclar", tiempo: "5 min", hacer: "Disolver la lipasa pancreática en 10 mL de buffer fosfato frío. Mantener en hielo.", porque: "La lipasa es termolábil: si se calienta pierde actividad antes de empezar.", observar: "Solución homogénea, siempre sobre hielo.", error: "Prepararla con mucha anticipación: debe usarse dentro de los 30 minutos." },
+    { etapa: "A", titulo: "Estandarizar el NaOH", icono: "bureta", tiempo: "5 min", hacer: "Cargar la bureta con NaOH 0,01 N. Verificar la concentración exacta con el estándar primario disponible. Hallar el factor de corrección (FC) y registrar la normalidad exacta.", porque: "El cálculo de AGL usa la normalidad real del NaOH, no la nominal.", observar: "Bureta sin burbujas en la punta y enrasada.", error: "Usar 0,01 N sin corregir por el factor.", registro: [{ id: "nNaOH", etiqueta: "Normalidad exacta del NaOH", unidad: "N", ejemplo: "0,0100" }] },
+    { etapa: "A", titulo: "Preparar la muestra de grasa", icono: "matraz", tiempo: "5 min", hacer: "Grupos con grasas sólidas: fundir 1 g en baño María a 37 °C y usar 0,5 mL por sistema, manteniéndola en el baño. Aceites: usar directamente.", porque: "Una grasa sólida no se puede pipetear ni emulsionar.", observar: "Grasa líquida y transparente.", error: "Sacarla del baño: la mantequilla y la grasa animal se vuelven a solidificar." },
+    { etapa: "A", titulo: "Rotular los matraces", icono: "lapiz", tiempo: "2 min", hacer: "Preparar 2 matraces Erlenmeyer de 100 mL, rotulados \"CONTROL\" y \"EXPERIMENTAL\".", porque: "El control (sin lipasa) permite distinguir los ácidos que ya tenía la grasa de los que libera la enzima.", observar: "Matraces limpios, secos y bien rotulados." },
+    { etapa: "B", titulo: "Armar los tubos de emulsión", icono: "medir", tiempo: "5 min", hacer: "Tubo 1 (sin sales biliares): 2 mL de agua destilada + 0,5 mL de la grasa del grupo. Tubo 2 (con sales biliares): 2 mL de buffer pH 7,4 + 0,5 mL de grasa + 0,2 mL de taurocolato sódico 2 %. Tapar ambos con parafilm.", porque: "Comparar los dos tubos muestra el efecto de las sales biliares sobre la misma grasa.", observar: "Dos fases separadas antes de agitar." },
+    { etapa: "B", titulo: "Agitar en vortex", icono: "mezclar", tiempo: "1 min", hacer: "Agitar ambos tubos vigorosamente en vortex durante 30 segundos a máxima velocidad.", porque: "La agitación rompe la grasa en gotas; las sales biliares evitan que se vuelvan a unir.", observar: "Líquido turbio y lechoso justo después de agitar.", temporizador: 30 },
+    { etapa: "B", titulo: "Observar a 0, 5 y 15 minutos", icono: "ojo", tiempo: "15 min", hacer: "Registrar en la Tabla B, para cada tubo y cada tiempo: (a) turbidez u opacidad, (b) separación de fases, (c) tamaño aparente de las gotas, (d) estabilidad de la emulsión.", porque: "Una emulsión estable sigue turbia; una inestable se separa en dos fases.", observar: "El tubo sin sales biliares se separa rápido; el tubo con sales biliares permanece turbio más tiempo.", error: "Con mantequilla (G2) y grasa animal (G4): observar los tubos dentro del baño María a 37 °C, porque se re-solidifican a temperatura ambiente." },
+    { etapa: "C", titulo: "Matraz CONTROL (sin lipasa)", icono: "medir", tiempo: "5 min", hacer: "Agregar: 5 mL de buffer fosfato pH 7,4 + 2 mL de la grasa del grupo + 0,5 mL de taurocolato sódico 2 % + 1 mL de buffer fosfato (en lugar de lipasa, para igualar volumen).", porque: "Mide los ácidos grasos que hay sin acción de la enzima.", observar: "Volumen total de 8,5 mL." },
+    { etapa: "C", titulo: "Matraz EXPERIMENTAL (con lipasa)", icono: "medir", tiempo: "5 min", hacer: "Agregar: 5 mL de buffer fosfato pH 7,4 + 2 mL de la grasa del grupo + 0,5 mL de taurocolato sódico 2 % + 1 mL de solución de lipasa pancreática (recién preparada, en frío).", porque: "Es el sistema completo: grasa emulsionada más enzima.", observar: "La lipasa se agrega al final: en ese instante empieza la reacción.", error: "No iniciar el cronómetro en el momento de agregar la lipasa." },
+    { etapa: "C", titulo: "Incubar a 37 °C", icono: "reloj", tiempo: "30 min", hacer: "Colocar AMBOS matraces en baño María a 37 °C con agitación constante (barra magnética a velocidad media). Iniciar el cronómetro al agregar la lipasa.", porque: "37 °C es la temperatura corporal; la agitación mantiene la emulsión.", observar: "Mezcla turbia y en movimiento durante toda la incubación." },
+    { etapa: "C", titulo: "Tomar alícuotas a 0, 10, 20 y 30 min", icono: "gotas", tiempo: "en cada tiempo", hacer: "A cada tiempo extraer 1 mL de CADA matraz con pipeta automática. Transferir a un tubo con 3 mL de etanol 95 % y agregar 2 gotas de fenolftaleína.", porque: "El etanol detiene la reacción: la alícuota queda 'congelada' en ese tiempo.", observar: "Tubos rotulados con matraz y tiempo (8 en total).", error: "Demorar en pasar la alícuota al etanol: la enzima sigue trabajando." },
+    {
+      etapa: "C",
+      titulo: "Titular cada alícuota",
+      icono: "titular",
+      tiempo: "5 min c/u",
+      hacer: "Titular con NaOH 0,01 N hasta viraje rosado persistente (más de 30 segundos). Registrar el volumen exacto de NaOH gastado, a la centésima de mL.",
+      porque: "El volumen de NaOH gastado es directamente proporcional a los moles de ácidos grasos libres.",
+      observar: "Rosado pálido que se mantiene más de 30 s.",
+      error: "Pasarse a rosado intenso: sobreestima los ácidos grasos.",
+      simulador: "titulacion",
+      temporizador: 30,
+      registro: [
+        { id: "c0", etiqueta: "Control · 0 min", unidad: "mL", ejemplo: "0,20" },
+        { id: "c10", etiqueta: "Control · 10 min", unidad: "mL", ejemplo: "0,22" },
+        { id: "c20", etiqueta: "Control · 20 min", unidad: "mL", ejemplo: "0,23" },
+        { id: "c30", etiqueta: "Control · 30 min", unidad: "mL", ejemplo: "0,25" },
+        { id: "e0", etiqueta: "Experimental · 0 min", unidad: "mL", ejemplo: "0,25" },
+        { id: "e10", etiqueta: "Experimental · 10 min", unidad: "mL", ejemplo: "0,90" },
+        { id: "e20", etiqueta: "Experimental · 20 min", unidad: "mL", ejemplo: "1,50" },
+        { id: "e30", etiqueta: "Experimental · 30 min", unidad: "mL", ejemplo: "1,95" },
+      ],
+    },
+    { etapa: "D", titulo: "Calcular AGL y graficar", icono: "grafico", tiempo: "15 min", hacer: "Calcular AGL (µmol/mL) para cada punto con la fórmula AGL = (V NaOH × N NaOH × 1000) / 1 mL. Graficar AGL (eje Y) contra tiempo (eje X) para el sistema experimental.", porque: "La pendiente de la zona lineal inicial es la velocidad de lipólisis (µmol AGL/mL/min).", observar: "Una recta ascendente en el experimental y una línea casi plana en el control." },
+    { etapa: "E", titulo: "Tabla comparativa y debate", icono: "repetir", tiempo: "25 min", hacer: "Compartir los resultados finales en el pizarrón. Completar la tabla comparativa con los datos de los 5 grupos y participar en el debate moderado por el docente.", porque: "Solo comparando las cinco grasas se ve cómo influye la composición en ácidos grasos.", observar: "Emulsión sin y con sales biliares, velocidad de lipólisis y AGL a 30 min de cada grupo." },
+  ],
+  resultados: "lipolisis",
+  analisis: [
+    {
+      titulo: "7.1 — Sobre la emulsificación",
+      preguntas: [
+        { id: "7.1a", titulo: "a) Sales biliares", pregunta: "¿Por qué las sales biliares son indispensables para la digestión de los lípidos? Explica el mecanismo molecular por el que reducen la tensión superficial entre la fase acuosa y la lipídica. ¿Qué consecuencia tendría una colestasis (obstrucción del flujo biliar) sobre la absorción de cada uno de los tipos de grasa usados en esta práctica?", buscar: "bile salts lipid emulsification cholestasis fat malabsorption" },
+        { id: "7.1b", titulo: "b) Insaturación y estabilidad", pregunta: "Comparando los resultados de los 5 grupos en la Tabla B: ¿qué relación encuentras entre el grado de insaturación de la grasa y la estabilidad de la emulsión formada con sales biliares? ¿Por qué los ácidos grasos insaturados se emulsionan más fácilmente que los saturados? Relaciona con la estructura molecular." },
+        { id: "7.1c", titulo: "c) Grasa animal", pregunta: "El grupo 4 (grasa animal) probablemente obtuvo la emulsión menos estable. ¿Cómo explicarías fisiológicamente que el intestino delgado pueda digerir la grasa animal saturada a pesar de esta dificultad de emulsificación? ¿Qué factores adicionales in vivo facilitan este proceso que no están presentes en el experimento?" },
+      ],
+    },
+    {
+      titulo: "7.2 — Sobre la lipólisis",
+      preguntas: [
+        { id: "7.2a", titulo: "a) Velocidades", pregunta: "Analiza las velocidades de lipólisis de los 5 grupos. ¿Qué grupo obtuvo la mayor velocidad inicial? ¿Por qué el aceite de coco (grupo 3) podría mostrar una cinética diferente a los demás? Relaciona con la longitud de cadena de sus ácidos grasos y la afinidad de la lipasa pancreática por distintos sustratos.", buscar: "pancreatic lipase substrate specificity medium chain triglycerides" },
+        { id: "7.2b", titulo: "b) El control", pregunta: "En tu sistema CONTROL (sin lipasa), ¿se observó algún incremento de AGL con el tiempo? Si fue así, ¿a qué lo atribuyes? ¿Qué nos dice esto sobre la especificidad del experimento y qué controles adicionales se podrían incluir para validar el método?" },
+        { id: "7.2c", titulo: "c) Regioespecificidad", pregunta: "La lipasa pancreática escinde preferentemente las posiciones sn-1 y sn-3 del triacilglicerol, dejando un 2-monoacilglicerol. ¿Por qué este mecanismo regioespecífico es importante para la absorción intestinal? ¿Qué sucedería con la absorción si la lipasa actuara también sobre la posición sn-2?" },
+      ],
+    },
+    {
+      titulo: "7.3 — Integración fisiológica y clínica",
+      preguntas: [
+        { id: "7.3a", titulo: "a) Insuficiencia pancreática", pregunta: "Un paciente con insuficiencia pancreática exocrina (como en la fibrosis quística o pancreatitis crónica) no produce suficiente lipasa pancreática. Usando los resultados de tu grupo como referencia, predice cómo se vería afectada la digestión de cada uno de los 5 tipos de grasa de esta práctica en ese paciente. ¿Cuál grasa se vería menos afectada y por qué? ¿Qué tratamiento farmacológico existe?", buscar: "exocrine pancreatic insufficiency pancreatic enzyme replacement therapy" },
+        { id: "7.3b", titulo: "b) Aceite de coco y VLCAD", pregunta: "El aceite de coco (grupo 3) es frecuentemente utilizado como suplemento en pacientes con deficiencia de VLCAD (acil-CoA deshidrogenasa de cadena muy larga). Usando lo aprendido en la práctica sobre la digestión de sus ácidos grasos de cadena media, explica por qué este aceite es terapéuticamente útil en esa patología. ¿Qué limitaciones tiene su uso? Relaciona con las prácticas de β-oxidación del curso.", buscar: "VLCAD deficiency medium chain triglycerides dietary treatment" },
+      ],
+    },
+    {
+      titulo: "8 — Debate final inter-grupos",
+      preguntas: [
+        { id: "8.1", titulo: "Pregunta 1 — Para todos", pregunta: "Ordenar los 5 tipos de grasa de MAYOR a MENOR velocidad de lipólisis esperada y justificar el orden con argumentos bioquímicos. ¿Coincide el orden teórico con los resultados obtenidos experimentalmente? Si hay discrepancias, ¿cuáles podrían ser las causas?" },
+        { id: "8.2", titulo: "Pregunta 2 — Grupos 1 y 5 (aceite vegetal vs. oliva)", pregunta: "Ambos son aceites vegetales líquidos ricos en ácidos grasos insaturados. ¿Por qué el aceite de oliva (predominio de oleico C18:1) podría tener una cinética de lipólisis ligeramente diferente al aceite de girasol (predominio de linoleico C18:2)? ¿Importa el número de dobles ligaduras para la actividad de la lipasa pancreática? ¿Y para la emulsificación?" },
+        { id: "8.3", titulo: "Pregunta 3 — Grupos 2, 3 y 4 (grasas con saturados)", pregunta: "Los tres grupos trabajaron con grasas que contienen ácidos grasos saturados, pero con longitudes de cadena muy diferentes (cadena corta/media en mantequilla, cadena media en coco, cadena larga en grasa animal). ¿Cómo afecta la longitud de cadena a: (a) la facilidad de emulsificación, (b) la velocidad de hidrólisis por la lipasa, y (c) la ruta de absorción de los productos? ¿Qué grupo tendría mayor beneficio de una dieta suplementada con sales biliares exógenas?" },
+        { id: "8.4", titulo: "Pregunta 4 — Reflexión integradora", pregunta: "En la práctica solo se usó lipasa pancreática. En la digestión real intervienen también la lipasa lingual (~10 %), la lipasa gástrica (~20–25 %) y la lipasa de membrana del enterocito. ¿Cambiaría significativamente el orden de velocidades de digestión entre los 5 tipos de grasa si incluyéramos todas estas enzimas? ¿Qué tipo de grasa se beneficiaría más de la lipasa gástrica y por qué?" },
+      ],
+    },
+  ],
+  preguntas: [],
+  bibliografia: [
+    { texto: "Hofmann, A. F., & Hagey, L. R. (2014). Key discoveries in bile acid chemistry and biology and their clinical applications. Journal of Lipid Research, 55(8), 1553–1595.", url: "https://doi.org/10.1194/jlr.R049437" },
+    { texto: "Lowe, M. E. (2002). The triglyceride lipases of the pancreas. Journal of Lipid Research, 43(12), 2007–2016.", url: "https://doi.org/10.1194/jlr.R200012-JLR200" },
+    { texto: "Mu, H., & Høy, C. E. (2004). The digestion of dietary triacylglycerols. Progress in Lipid Research, 43(2), 105–133.", url: "https://doi.org/10.1016/S0163-7827(03)00050-X" },
+    { texto: "Lehninger, A. L., Nelson, D. L., & Cox, M. M. (2021). Lehninger: Principios de Bioquímica (7.ª ed.). Omega." },
+    { texto: "Vaquero, E., Molero, X., & Malagelada, J. R. (2017). Fisiología de la digestión lipídica. Gastroenterología y Hepatología, 40(4), 260–275.", url: "https://doi.org/10.1016/j.gastrohep.2016.06.003" },
+    { texto: "Spiekerkoetter, U., & Wood, P. A. (2010). Mitochondrial fatty acid oxidation disorders: pathophysiological studies in mouse models. Journal of Inherited Metabolic Disease, 33(5), 539–546.", url: "https://doi.org/10.1007/s10545-010-9121-7" },
+  ],
+};

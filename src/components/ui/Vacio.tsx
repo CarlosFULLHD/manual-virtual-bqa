@@ -1,9 +1,12 @@
-export function Vacio({ mensaje = "Esta sección todavía no tiene contenido." }: { mensaje?: string }) {
+import { Icono } from "./Icono";
+
+export function Vacio({ mensaje = "Esta sección se está preparando." }: { mensaje?: string }) {
   return (
     <div className="vacio">
-      <p>{mensaje}</p>
-      <p className="muted" style={{ fontSize: 13, marginTop: 4 }}>
-        Se completa editando el archivo de la práctica en <code>src/data/practicas/</code>.
+      <Icono nombre="matraz" tam={34} />
+      <p style={{ marginTop: 8, fontWeight: 600 }}>{mensaje}</p>
+      <p className="pequeno" style={{ marginTop: 4 }}>
+        Tu docente la publicará antes de la fecha de la práctica.
       </p>
     </div>
   );

@@ -1,35 +1,52 @@
 "use client";
 
 import Link from "next/link";
-import { useProgreso, type Rol } from "@/context/ProgresoContext";
+import { usePathname } from "next/navigation";
+import { Icono } from "@/components/ui/Icono";
 import { Logo } from "./Logo";
 
+const ENLACES = [
+  { href: "/", nombre: "Prácticas", icono: "matraz" },
+  { href: "/herramientas", nombre: "Herramientas", icono: "herramientas" },
+  { href: "/glosario", nombre: "Glosario", icono: "libro" },
+];
+
+function activo(pathname: string, href: string) {
+  if (href === "/") return pathname === "/" || pathname.startsWith("/practicas");
+  return pathname.startsWith(href);
+}
+
 export function BarraSuperior() {
-  const { rol, setRol } = useProgreso();
-  const roles: Rol[] = ["estudiante", "docente"];
+  const pathname = usePathname();
   return (
-    <header className="topbar">
-      <Link href="/" className="brand">
-        <Logo />
-        <span>
-          <b>Manual Virtual · Bioquímica Aplicada</b>
-          <span>UMSA · Laboratorio · Piloto</span>
-        </span>
-      </Link>
-      <div className="row">
-        {rol === "docente" && (
-          <Link href="/docente" className="btn small">
-            Panel docente
-          </Link>
-        )}
-        <div className="seg" role="group" aria-label="Rol">
-          {roles.map((r) => (
-            <button key={r} aria-pressed={rol === r} onClick={() => setRol(r)}>
-              {r === "estudiante" ? "Estudiante" : "Docente"}
-            </button>
+    <>
+      <header className="topbar">
+        <Link href="/" className="brand">
+          <span className="brand-logo">
+            <Logo />
+          </span>
+          <span>
+            <b>Lab BQA</b>
+            <span>Bioquímica Aplicada · UMSA</span>
+          </span>
+        </Link>
+        <nav className="nav-principal" aria-label="Principal">
+          {ENLACES.map((e) => (
+            <Link key={e.href} href={e.href} aria-current={activo(pathname, e.href) ? "page" : undefined}>
+              <Icono nombre={e.icono} tam={18} />
+              {e.nombre}
+            </Link>
           ))}
-        </div>
-      </div>
-    </header>
+        </nav>
+      </header>
+      <nav className="nav-inferior" aria-label="Principal (móvil)">
+        {ENLACES.map((e) => (
+          <Link key={e.href} href={e.href} aria-current={activo(pathname, e.href) ? "page" : undefined}>
+            <Icono nombre={e.icono} tam={22} />
+            <span>{e.nombre}</span>
+          </Link>
+        ))}
+      </nav>
+    </>
   );
 }

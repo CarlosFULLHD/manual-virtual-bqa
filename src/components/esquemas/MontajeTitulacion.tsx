@@ -2,11 +2,23 @@
  * Dibujo del montaje de titulación: soporte universal, bureta y Erlenmeyer.
  * `liquido` permite cambiar el color del contenido del matraz (lo usa el simulador).
  */
-export function MontajeTitulacion({ liquido = "var(--leche)", compacto = false }: { liquido?: string; compacto?: boolean }) {
+export function MontajeTitulacion({
+  liquido = "var(--leche)",
+  compacto = false,
+  sinEtiquetas = false,
+  nivelBureta = 1,
+}: {
+  liquido?: string;
+  compacto?: boolean;
+  sinEtiquetas?: boolean;
+  /** Fracción de la bureta llena (0-1) */
+  nivelBureta?: number;
+}) {
+  const alto = 148 * Math.max(0, Math.min(1, nivelBureta));
   return (
     <svg
       viewBox={compacto ? "60 0 150 290" : "0 0 360 300"}
-      width={compacto ? 120 : 340}
+      width={compacto ? 130 : 340}
       style={{ maxWidth: "100%", display: "block", margin: "auto" }}
       role="img"
       aria-label="Soporte universal con bureta sobre un matraz Erlenmeyer"
@@ -15,7 +27,7 @@ export function MontajeTitulacion({ liquido = "var(--leche)", compacto = false }
       <rect x="60" y="20" width="6" height="258" fill="var(--muted)" />
       <rect x="62" y="96" width="70" height="6" rx="2" fill="var(--muted)" />
       <rect x="124" y="20" width="16" height="170" rx="3" fill="var(--surface)" stroke="var(--vidrio)" strokeWidth="2" />
-      <rect x="127" y="40" width="10" height="148" fill="var(--accent-soft)" opacity={0.8} />
+      <rect x="127" y={188 - alto} width="10" height={alto} fill="var(--accent-soft)" opacity={0.9} style={{ transition: "all .3s" }} />
       {Array.from({ length: 14 }, (_, i) => (
         <line key={i} x1="124" x2={i % 5 === 0 ? 133 : 130} y1={40 + i * 10} y2={40 + i * 10} stroke="var(--vidrio)" strokeWidth="1" />
       ))}
@@ -23,7 +35,7 @@ export function MontajeTitulacion({ liquido = "var(--leche)", compacto = false }
       <path d="M130 197h4v16l-2 5-2-5z" fill="var(--vidrio)" />
       <path d="M120 222h24v18l22 34H98l22-34z" fill="var(--surface)" stroke="var(--vidrio)" strokeWidth="2" />
       <path d="M109 257h46l11 17H98z" fill={liquido} style={{ transition: "fill .3s" }} />
-      {!compacto && (
+      {!compacto && !sinEtiquetas && (
         <g fontSize="12" fill="var(--ink)">
           <line x1="142" y1="70" x2="200" y2="70" stroke="var(--muted)" />
           <text x="204" y="74">Bureta (NaOH 0,1 N)</text>
